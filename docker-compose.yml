@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  bot:
+    build: ./
+    command: python3 webhook.py
+    env_file:
+      - ./.env
+    restart: always
+
+
+  nginx:
+    build: ./proxy
+    restart: always
+    ports:
+      - '8080:8080'
+    depends_on:
+      - bot
+
+
