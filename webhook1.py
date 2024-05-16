@@ -1,8 +1,7 @@
 """
-This example shows how to use webhook with SSL certificate.
+This example shows how to use webhook on behind of any reverse proxy (nginx, traefik, ingress etc.)
 """
 import logging
-import ssl
 import sys
 from os import getenv
 
@@ -11,7 +10,7 @@ from aiohttp import web
 from aiogram import Bot, Dispatcher, Router, types
 from aiogram.enums import ParseMode
 from aiogram.filters import CommandStart
-from aiogram.types import FSInputFile, Message
+from aiogram.types import Message
 from aiogram.utils.markdown import hbold
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
 
@@ -22,19 +21,15 @@ TOKEN = '6677077782:AAEEiomVJtt1JnNntOjTjhR4_0pyoB1kzM0'
 # bind localhost only to prevent any external access
 WEB_SERVER_HOST = "0.0.0.0"
 # Port for incoming request from reverse proxy. Should be any available port
-WEB_SERVER_PORT = 8088
+WEB_SERVER_PORT = 8080
 
 # Path to webhook route, on which Telegram will send requests
 WEBHOOK_PATH = "/webhook"
 # Secret key to validate requests from Telegram (optional)
-WEBHOOK_SECRET = "my-secret"
+WEBHOOK_SECRET = "my-secret-key"
 # Base URL for webhook will be used to generate webhook URL for Telegram,
-# in this example it is used public address with TLS support
+# in this example it is used public DNS with HTTPS support
 BASE_WEBHOOK_URL = "https://pythonproject-mdak.onrender.com"
-
-# Path to SSL certificate and private key for self-signed certificate.
-WEBHOOK_SSL_CERT = "./MYPUBLIC.pem"
-WEBHOOK_SSL_PRIV = "./MYRIVATE.key"
 
 # All handlers should be attached to the Router (or Dispatcher)
 router = Router()
@@ -69,15 +64,9 @@ async def echo_handler(message: types.Message) -> None:
 
 
 async def on_startup(bot: Bot) -> None:
-    # In case when you have a self-signed SSL certificate, you need to send the certificate
-    # itself to Telegram servers for validation purposes
-    # (see https://core.telegram.org/bots/self-signed)
-    # But if you have a valid SSL certificate, you SHOULD NOT send it to Telegram servers.
-    await bot.set_webhook(
-        f"{BASE_WEBHOOK_URL}{WEBHOOK_PATH}",
-        certificate=FSInputFile(WEBHOOK_SSL_CERT),
-        secret_token=WEBHOOK_SECRET,
-    )
+    # If you have a self-signed SSL certificate, then you will need to send a public
+    # certificate to Telegram
+    await bot.set_webhook(f"{BASE_WEBHOOK_URL}{WEBHOOK_PATH}", secret_token=WEBHOOK_SECRET)
 
 
 def main() -> None:
@@ -109,14 +98,9 @@ def main() -> None:
     # Mount dispatcher startup and shutdown hooks to aiohttp application
     setup_application(app, dp, bot=bot)
 
-    # Generate SSL context
-    context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-    context.load_cert_chain(WEBHOOK_SSL_CERT, WEBHOOK_SSL_PRIV)
-
     # And finally start webserver
-    web.run_app(app, host=WEB_SERVER_HOST, port=WEB_SERVER_PORT, ssl_context=context)
+    web.run_app(app, host=WEB_SERVER_HOST, port=WEB_SERVER_PORT)
 
 
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, stream=sys.stdout)
-    main()
+
+main()

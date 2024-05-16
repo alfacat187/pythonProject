@@ -5,5 +5,5 @@ COPY requirements.txt requirements.txt
 RUN pip install --upgrade setuptools
 RUN pip install -r requirements.txt
 RUN chmod 755 .
-COPY webhook.py webhook.py
+COPY webhook1.py webhook.py
 
