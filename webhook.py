@@ -20,7 +20,7 @@ TOKEN = '6677077782:AAEEiomVJtt1JnNntOjTjhR4_0pyoB1kzM0'
 
 # Webserver settings
 # bind localhost only to prevent any external access
-WEB_SERVER_HOST = "216.24.57.4"
+WEB_SERVER_HOST = "216.24.57.252"
 # Port for incoming request from reverse proxy. Should be any available port
 WEB_SERVER_PORT = 8443
 

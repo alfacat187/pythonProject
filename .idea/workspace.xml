@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7149c5a1-dcb4-4576-b82b-8390e8bf2ad3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webhook.py" beforeDir="false" afterPath="$PROJECT_DIR$/webhook.py" afterDir="false" />
-    </list>
+    <list default="true" id="7149c5a1-dcb4-4576-b82b-8390e8bf2ad3" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -129,7 +126,7 @@
       <workItem from="1715769515136" duration="246000" />
       <workItem from="1715800378949" duration="7170000" />
       <workItem from="1715852567796" duration="661000" />
-      <workItem from="1715857905414" duration="4677000" />
+      <workItem from="1715857905414" duration="5143000" />
     </task>
     <servers />
   </component>
