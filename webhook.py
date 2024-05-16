@@ -30,7 +30,7 @@ WEBHOOK_PATH = "/webhook"
 WEBHOOK_SECRET = "my-secret"
 # Base URL for webhook will be used to generate webhook URL for Telegram,
 # in this example it is used public address with TLS support
-BASE_WEBHOOK_URL = "https://pythonproject-mdak.onrender.com"
+BASE_WEBHOOK_URL = "https://pythonproject-mdak.onrender.com:8080"
 
 # Path to SSL certificate and private key for self-signed certificate.
 WEBHOOK_SSL_CERT = "./MYPUBLIC.pem"
